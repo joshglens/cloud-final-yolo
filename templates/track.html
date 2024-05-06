@@ -1,0 +1,61 @@
+<!-- Adapted from https://www.digitalocean.com/community/tutorials/front-and-rear-camera-access-with-javascripts-getusermedia -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Yolo Track</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainstyle.css') }}">
+</head>
+<body>
+    <h1>Webcam Stream</h1>
+    <video id="video" width="1280" height="720" autoplay></video>
+    <canvas id="canvas" width="1280" height="720" style="display:none;"></canvas>
+
+    <p>Processed image with tracks</p>
+    <img id="resultImage" src="" alt="Processed Image" style="display:block; margin-top:20px;">
+    <p><br>Spotted since last reset<br></p>
+    <div id="user_df_display"></div><br>
+    <button id="resetButton"> Reset Stats </button>
+    <script>
+        const video = document.getElementById('video');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+
+        if (navigator.mediaDevices.getUserMedia) {
+            navigator.mediaDevices.getUserMedia({ video: true })
+                .then(function(stream) {
+                    video.srcObject = stream;
+                }).catch(function(error) {
+                    console.log("Something went wrong!");
+                });
+        }
+
+        setInterval(() => {
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            canvas.toBlob(processImage, 'image/png');
+        }, 500);
+
+        var eventSource = new EventSource("/stream_user");
+        eventSource.onmessage = function(event) {
+            document.getElementById("user_df_display").innerHTML = event.data;
+        };
+
+        function processImage(blob) {
+            const formData = new FormData();
+            formData.append('image', blob);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            }).then(response => response.json())
+              .then(data => {
+                  document.getElementById('resultImage').src = "data:image/png;base64," + data.image;
+                  //document.getElementById('resultText').textContent = data.text;
+              });
+        }
+
+        document.getElementById('resetButton').addEventListener('click', function() {
+        fetch('/reset_data', {method: 'GET'});
+        });
+
+    </script>
+</body>
+</html>

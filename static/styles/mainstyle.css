@@ -1,0 +1,39 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Professional font */
+    line-height: 1.6;
+    color: #333;
+    background: #f4f4f4;
+    padding: 20px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #333;
+    margin-bottom: 0.5em;
+}
+
+p {
+    font-size: 1em;
+    margin-bottom: 1em;
+}
+
+a {
+    color: #0067a5; /* A pleasant blue, professional looking */
+    text-decoration: none; /* Removes underline */
+}
+
+a:hover, a:focus {
+    text-decoration: underline;
+}
+
+th {
+    font-size: 1.25em;
+}
+td {
+    font-size: 1.25em;
+}
+
+button {
+        width: 8em;
+        height: 4em;
+        font-size: 1.8em;
+    }

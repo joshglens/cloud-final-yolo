@@ -1,0 +1,14 @@
+data/walmart-amazon
+.ipynb_checkpoints
+
+# Environments
+.env
+.venv
+env/
+venv/
+venv-gpu/
+ENV/
+env.bak/
+venv.bak/
+.idea
+torch-2.4.0.dev20240501+cu124-cp310-cp310-win_amd64.whl

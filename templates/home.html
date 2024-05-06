@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainstyle.css') }}">
+</head>
+<body>
+    {% if current_user.is_authenticated and current_user.username == "admin"%}
+        <p>Welcome, {{ current_user.username }}!</p>
+        <p> As the admin, you have access to a special stats panel:</p>
+        <p>Please click below to access tracking!</p>
+        <a href="{{ url_for('track') }}">Track</a><br>
+        <a href="{{ url_for('special_service_page') }}"> Special Panel </a><br>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% elif current_user.is_authenticated%}
+        <p>Welcome, user {{ current_user.username }}!</p>
+        <p>Please click below to access tracking!</p>
+        <a href="{{ url_for('track') }}">Track</a><br>
+        <a href="{{ url_for('logout') }}">Logout</a>
+    {% else %}
+        <p>Welcome, Guest!</p>
+        <a href="{{ url_for('login') }}">Login</a>
+        <a href="{{ url_for('register') }}">Register</a>
+    {% endif %}
+
+</body>
+</html>

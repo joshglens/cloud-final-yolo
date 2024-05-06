@@ -1,0 +1,10 @@
+flask
+matplotlib
+seaborn
+numpy
+ultralytics
+flask
+flask-login
+flask-sqlalchemy
+pillow
+lapx

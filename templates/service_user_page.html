@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Home</title>
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainstyle.css') }}">
+    <script type="text/javascript">
+        var eventSource = new EventSource("/stream_admin");
+        eventSource.onmessage = function(event) {
+            document.getElementById("full_df").innerHTML = event.data;
+        };
+
+        var eventSource2 = new EventSource("/stream_metrics");
+        eventSource2.onmessage = function(event) {
+            document.getElementById("service_metrics").innerText = event.data;
+        };
+    </script>
+</head>
+<body>
+        <p>Welcome, {{ current_user.username }}!</p>
+        <a href="{{ url_for('logout') }}">Logout</a>
+        <p> As the admin, you have access to the special stats panel below.</p>
+        <p> It shows all the tracks from all users in this session, in real time.</p>
+        <p id="service_metrics"> </p>
+        <p> Be careful, you're Big Brother now:</p>
+        <div id="full_df"></div>
+
+</body>
+</html>
